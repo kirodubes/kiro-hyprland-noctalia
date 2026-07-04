@@ -157,6 +157,7 @@ hl.config({
   misc = {
     disable_hyprland_logo = true,
     disable_splash_rendering = true,
+    disable_watchdog_warning = true, -- we launch Hyprland --config directly (no start-hyprland wrapper)
     mouse_move_enables_dpms = true,
     key_press_enables_dpms = true,
     focus_on_activate = true,

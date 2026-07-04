@@ -2,6 +2,20 @@
 
 ## 2026.07.04
 
+### Silence the new "started without start-hyprland" banner
+
+**What Changed.** Added `misc.disable_watchdog_warning = true` to
+`hyprland.lua`. Current Hyprland ships a `start-hyprland` wrapper that launches
+the compositor with a crash-recovery watchdog fd (`--watchdog-fd`); when
+Hyprland is exec'd without one it logs a persistent on-screen banner. This is a
+*different, newer* check than the older "started without UWSM" nag — launching
+via `uwsm start -- Hyprland --config` (see below) does **not** pass a watchdog
+fd, so the banner still fired. Since our whole edition-coexistence model relies
+on `Hyprland --config <namespaced>`, the config knob is the intended escape
+hatch — no launch-path change needed.
+
+**Files Modified.** `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`.
+
 ### Launch through uwsm (fixes the "started without UWSM" banner)
 
 **What Changed.** The session wrapper now launches Hyprland via
