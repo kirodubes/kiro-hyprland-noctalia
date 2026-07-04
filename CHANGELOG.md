@@ -2,6 +2,23 @@
 
 ## 2026.07.04
 
+### Shared noctalia config extracted to `kiro-noctalia`
+
+**What Changed.** Removed the `etc/skel/.config/noctalia/` folder from this
+package and added `kiro-noctalia` to `depends=()`. noctalia reads the fixed path
+`~/.config/noctalia/`, so the identical config shipped here and by
+`kiro-niri-noctalia` caused a pacman file conflict on
+`/etc/skel/.config/noctalia/settings.json` — the two editions could not
+co-install. The shared config now has a single owner, `kiro-noctalia`.
+
+**Technical Details.** The compositor config (`~/.config/kiro-hyprland-noctalia/`),
+session and wrapper are unchanged and still shipped here. Only the shared
+`noctalia/` skel folder moved out. The golden copy at
+`/usr/share/kiro/kiro-hyprland-noctalia/` now contains only this edition's config;
+`kiro-noctalia` ships its own noctalia golden copy.
+
+**Files Modified.** removed `etc/skel/.config/noctalia/*`; `../KIROTUX-PKG-BUILD/kiro-hyprland-noctalia/PKGBUILD` (depends + comment).
+
 ### Initial config package
 
 **What Changed.** Stood up `kiro-hyprland-noctalia`, the Kiro Hyprland edition
