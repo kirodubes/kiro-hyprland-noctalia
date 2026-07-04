@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Kiro Hyprland Noctalia
+Comment=Kiro Hyprland edition (Hyprland + noctalia-shell)
+Exec=kiro-hyprland-noctalia-session
+Type=Application
+DesktopNames=Hyprland
