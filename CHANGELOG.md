@@ -2,6 +2,30 @@
 
 ## 2026.07.04
 
+### Fix app-launcher icons rendering as magenta/black placeholders
+
+**What Changed.** Added `hl.env("QT_QPA_PLATFORMTHEME", "gtk3")` to `hyprland.lua`.
+noctalia-shell 4.7.7 is a Qt6/Quickshell app and resolves app icons through Qt's
+platform theme. The session inherited `QT_QPA_PLATFORMTHEME=qt5ct` from
+`/etc/environment`, but qt5ct is **Qt5** (and isn't even installed), so Qt6 could
+not load it and fell back to the `hicolor` default. Result: every app whose icon
+comes from the *theme* rather than its own package (ARandR→`display`, the Avahi
+tools→`network-wired`, nm-connection-editor, ATT, archlinux-logout) rendered
+noctalia's magenta/black "missing" placeholder; apps shipping their own hicolor
+icon were fine. Pointing Qt at the `gtk3` platform theme (plugin `libqgtk3.so`,
+already present) makes Qt6 read the GTK icon theme (Surfn, via gsettings) — same
+source GTK apps use. **Verified live** on the VM: restarting noctalia with this
+env resolved the launcher grid to real Surfn icons.
+
+**Note.** This is the Qt half of the fix; the GTK/gsettings half was
+`kiro-wayland-dotfiles` compiling its dconf defaults (same-day). The sibling
+`kiro-niri-noctalia` already set `QT_QPA_PLATFORMTHEME=gtk3` in its `misc.kdl` —
+this brings the Hyprland edition in line. The systemic `/etc/environment=qt5ct`
+still mis-themes Qt6 apps on the other Hyprland/wlroots editions (kiro-hyprland
+waybar, wayfire, …) — worth fixing at the ISO level separately.
+
+**Files Modified.** `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`.
+
 ### Silence the new "started without start-hyprland" banner
 
 **What Changed.** Added `misc.disable_watchdog_warning = true` to
