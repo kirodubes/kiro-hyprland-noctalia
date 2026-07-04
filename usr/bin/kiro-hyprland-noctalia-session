@@ -15,8 +15,11 @@
 #   Hyprland but ship different configs. Sharing ~/.config/hypr/ means switching
 #   editions inherits the other one's stale config. Pointing Hyprland at a
 #   per-edition config folder keeps them cleanly separate and co-installable.
-#   Hyprland is started directly (no systemd service like niri), so a plain
-#   --config flag is all that is needed — no NIRI_CONFIG-style env dance.
+#   Launched through uwsm (Universal Wayland Session Manager) rather than a bare
+#   Hyprland exec: Hyprland (0.49+) shows a persistent on-screen banner nagging
+#   that it was started WITHOUT uwsm, and uwsm is the upstream-recommended launch
+#   method (it sets up the systemd user session + imports the environment). The
+#   --config flag still points Hyprland at this edition's own config folder.
 #####################################################################
 
-exec Hyprland --config "$HOME/.config/kiro-hyprland-noctalia/hyprland.lua" "$@"
+exec uwsm start -- Hyprland --config "$HOME/.config/kiro-hyprland-noctalia/hyprland.lua" "$@"

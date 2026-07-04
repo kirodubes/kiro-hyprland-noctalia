@@ -2,6 +2,22 @@
 
 ## 2026.07.04
 
+### Launch through uwsm (fixes the "started without UWSM" banner)
+
+**What Changed.** The session wrapper now launches Hyprland via
+`uwsm start -- Hyprland --config …` instead of a bare `Hyprland --config`.
+Hyprland (0.49+) shows a persistent on-screen banner nagging that it was started
+without uwsm; uwsm is also the upstream-recommended launch method (systemd user
+session + environment import). Added `uwsm` to `depends=()`.
+
+**Note.** The two `on_start` env-propagation lines in `hyprland.lua`
+(`dbus-update-activation-environment` + `systemctl --user import-environment`)
+are now redundant under uwsm (it owns environment import) but left in place —
+harmless. Revisit if a cleaner `uwsm finalize` is wanted.
+
+**Files Modified.** `usr/bin/kiro-hyprland-noctalia-session`;
+`../KIROTUX-PKG-BUILD/kiro-hyprland-noctalia/PKGBUILD` (depends).
+
 ### Shared noctalia config extracted to `kiro-noctalia`
 
 **What Changed.** Removed the `etc/skel/.config/noctalia/` folder from this
