@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026.07.07
+
+### Keyboard: US default + Alt+Shift layout toggle
+
+**What Changed**
+- Flipped the layout order `be,us` → **`us,be`**: US QWERTY is now the default at login, Belgian AZERTY the secondary layout.
+- Added **`grp:alt_shift_toggle`** to the xkb options (now `grp:alt_shift_toggle,compose:caps`) so **Alt+Shift** switches `us`↔`be`. Before, the second layout was loaded but had no switch key — unreachable.
+
+**Technical Details**
+- `grp:alt_shift_toggle` matches the CachyOS Calamares reference (`keyboard/Config.cpp` defaults the group switcher to it when a second layout exists). `compose:caps` (Caps = Compose) unchanged. `input.kb_layout` / `kb_options` in `hyprland.lua`.
+
+**Files Modified**
+- `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`
+
 ## 2026.07.04
 
 ### Fix app-launcher icons rendering as magenta/black placeholders

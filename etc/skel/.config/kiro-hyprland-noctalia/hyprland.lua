@@ -135,8 +135,8 @@ hl.config({
   },
 
   input = {
-    kb_layout = "be,us",          -- Belgian + US (add kb_options grp:alts_toggle to switch layouts)
-    kb_options = "compose:caps",  -- Caps Lock acts as Compose key
+    kb_layout = "us,be",                            -- US + Belgian
+    kb_options = "grp:alt_shift_toggle,compose:caps",  -- Alt+Shift switches layouts; Caps = Compose
     repeat_rate = 40,
     repeat_delay = 600,
     follow_mouse = 1,
