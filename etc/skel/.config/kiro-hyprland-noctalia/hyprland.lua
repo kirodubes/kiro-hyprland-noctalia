@@ -67,7 +67,24 @@ hl.env("WLR_RENDERER_ALLOW_SOFTWARE", "1")
 -- ── Monitors & scaling ─────────────────────────────────────────────────────
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/  (`hyprctl monitors` to list).
 -- Default: every output, preferred mode, auto position, scale 1 (good for 1080p/1440p).
+
+-- Single Monitor
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
+
+-- Dual monitor
+-- hl.monitor({
+--     output = "desc:BNQ BenQ GW2780 K1M0156201Q",
+--     mode = "1920x1080@60.0",
+--     position = "2429x0",
+--     scale = 1.0
+-- })
+-- hl.monitor({
+--     output = "desc:BNQ BenQ GW2780 K1M0106301Q",
+--     mode = "1920x1080@60.0",
+--     position = "509x0",
+--     scale = 1.0
+-- })
+
 hl.env("GDK_SCALE", "1")
 -- HiDPI: bump both for crisp scaling, e.g.
 --   retina 2x (13" 2.8K / 27" 5K):  scale = 2    + GDK_SCALE 2
@@ -367,3 +384,12 @@ bind("XF86MonBrightnessDown", "Brightness down",run("brightnessctl set 5%-"))
 -- Screenshots
 bind("PRINT",           "Screenshot region", run('grim -g "$(slurp)" - | wl-copy'))
 bind(mod .. " + PRINT", "Screenshot screen", run("grim - | wl-copy"))
+
+bind("CTRL + ALT + Return",  "Terminal",        run(term))
+
+-- Variety
+-- install swaybg
+bind("ALT + n", "Variety --next", run("variety -n"))
+bind("ALT + p", "Variety --previous", run("variety -p"))
+bind("ALT + t", "Variety --trash", run("variety -t"))
+bind("ALT + f", "Variety --favorite", run("variety -f"))
