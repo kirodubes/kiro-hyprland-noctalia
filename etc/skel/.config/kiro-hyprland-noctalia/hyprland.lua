@@ -382,8 +382,9 @@ bind("XF86MonBrightnessUp",   "Brightness up",  run("brightnessctl set 5%+"))
 bind("XF86MonBrightnessDown", "Brightness down",run("brightnessctl set 5%-"))
 
 -- Screenshots
-bind("PRINT",           "Screenshot region", run('grim -g "$(slurp)" - | wl-copy'))
-bind(mod .. " + PRINT", "Screenshot screen", run("grim - | wl-copy"))
+-- kiro-screenshot (kiro-wayland-dotfiles): PNG in ~/Pictures/Screenshots + clipboard + notify.
+bind("PRINT",           "Screenshot region", run("kiro-screenshot region"))
+bind(mod .. " + PRINT", "Screenshot screen", run("kiro-screenshot screen"))
 
 bind("CTRL + ALT + Return",  "Terminal",        run(term))
 

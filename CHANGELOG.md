@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026.09.05
+
+### What Changed
+- **Print now leaves a file behind.** The screenshot binds ran `grim … | wl-copy`, which put the
+  image on the clipboard and nowhere else — no file, no notification, so the key looked dead next to
+  chadwm's scrot bind that writes into `~/Pictures`. Both binds now call the shared
+  `kiro-screenshot region` / `kiro-screenshot screen`, which saves a timestamped PNG in
+  `~/Pictures/Screenshots`, still copies to the clipboard, and notifies with a thumbnail.
+
+### Technical Details
+- The helper is `/usr/bin/kiro-screenshot`, shipped by `kiro-wayland-dotfiles` — already a dependency
+  of this package. The same clipboard-only line had been copy-pasted into twelve editions, so it now
+  lives in exactly one place instead of being fixed twelve times.
+- `hyprland.lua`: `run("kiro-screenshot region")`. noctalia has no popout-hiding IPC of its own, so
+  the helper's DMS handshake is a no-op here (guarded by `command -v dms`) and the grab is plain.
+- **Build `kiro-wayland-dotfiles` first**: it provides the binary this edition's binds call.
+
+### Files Modified
+- `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`
+- `etc/skel/.config/kiro-hyprland-noctalia/keybindings.txt`
+
 ## 2026.07.07
 
 ### Keyboard: US default + Alt+Shift layout toggle
