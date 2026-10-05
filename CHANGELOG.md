@@ -15,6 +15,10 @@
   in Calamares still typed US/Belgian in Hyprland. `hyprland.lua` now reads `XKBLAYOUT` / `XKBVARIANT` from
   `/etc/vconsole.conf` (written by `kiro_final` from the installer's choice); without it (live ISO) the old value stays.
   Kirotux Hyprland Premium can still override it per user in `appearance.lua`.
+- **Ctrl+Alt+H opens Kirotux Hyprland Premium** (theme, icons, cursor, font, window look, wallpaper, keyboard,
+  presets). The key used to start `hyprland-tweak-tool`, which no ISO ships any more.
+- `import-gsettings.sh` (runs at every login) now keeps a **Light** choice: it went `prefer-dark` unconditionally, so
+  choosing Light in the app was undone at the next login. It also copies the cursor size into gsettings.
 
 ### Technical Details
 - Added after `kb_options`. Hyprland's default (`false`) resolves symbol binds against the first layout in `kb_layout`.
@@ -24,9 +28,16 @@
 - `installer_keyboard(fallback)` (Lua `io`) above `hl.config`; `kb_layout = kb_layout`, `kb_variant = kb_variant`.
   Checked against `XKBLAYOUT=be`, quoted multi-layout values with variants, an empty value and a missing file.
   On the QEMU dms install (installer: Belgian) Hyprland went from `us,be` to `be`, no config errors. Fallback here: `us,be`.
+- `import-gsettings.sh`: `color-scheme` follows `gtk-application-prefer-dark-theme` in `gtk-4.0/settings.ini`
+  (`false`/`0` = light, anything else or no file = dark, as before); `gtk-cursor-theme-size` → `cursor-size`.
+  Both new reads are `|| true`-guarded for the script's `set -euo pipefail`. Tested on the QEMU dms install.
+- Bind added after Ctrl+Alt+E (replacing the `hyprland-tweak-tool` line where it still existed); `keybindings.txt`
+  updated to match.
 
 ### Files Modified
 - `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`
+- `etc/skel/.config/kiro-hyprland-noctalia/scripts/import-gsettings.sh`
+- `etc/skel/.config/kiro-hyprland-noctalia/keybindings.txt`
 
 ## 2026.09.05
 
