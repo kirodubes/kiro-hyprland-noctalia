@@ -60,6 +60,7 @@ hl.env("HYPRCURSOR_SIZE", "12")
 hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
 hl.env("GDK_BACKEND", "wayland,x11,*")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+hl.env("QT_STYLE_OVERRIDE", "kvantum")   -- Qt style (was in /etc/environment)
 -- Qt6 (noctalia/Quickshell) reads its icon theme from the gtk3 platform theme, so app icons
 -- follow the GTK/Surfn theme. Overrides the broken /etc/environment QT_QPA_PLATFORMTHEME=qt5ct
 -- (qt5ct is Qt5 + not installed → Qt6 falls back to hicolor and app icons render as placeholders).
