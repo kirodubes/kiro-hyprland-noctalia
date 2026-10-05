@@ -8,9 +8,15 @@
   AZERTY but Super+letter binds stayed on their QWERTY key positions. Now Super+A is the A printed on the key in
   whichever layout is active. Workspace binds use `code:` keys (physical positions) and are unchanged. Tested on a
   QEMU install of kiro-hyprland-dms.
+- `hyprland.lua` now ends with an **appearance loader**: `pcall(require, "appearance")` loads `appearance.lua` from
+  the same folder when it exists. The upcoming Kirotux Hyprland Premium app writes the user's look there (only the
+  values they changed), so it never edits `hyprland.lua` itself. No file = this edition's own look, as before.
 
 ### Technical Details
 - Added after `kb_options`. Hyprland's default (`false`) resolves symbol binds against the first layout in `kb_layout`.
+- Proven on a QEMU kiro-hyprland-dms install (Hyprland 0.56.2): `package.path` starts with the config folder, a
+  second `hl.config` merges, every reload re-reads the file, a missing file is silent, and a broken one is reported
+  while the rest of the config still loads (`pcall`). The loader must stay the last lines so the user's choices win.
 
 ### Files Modified
 - `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`
