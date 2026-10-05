@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026.10.05
+
+### What Changed
+- Keybindings now follow the active keyboard layout: `resolve_binds_by_sym = true` in the `input` block. With `us,be`
+  (or `be,us`), Hyprland used to read every bind as if the first layout were active, so after Alt+Shift you typed
+  AZERTY but Super+letter binds stayed on their QWERTY key positions. Now Super+A is the A printed on the key in
+  whichever layout is active. Workspace binds use `code:` keys (physical positions) and are unchanged. Tested on a
+  QEMU install of kiro-hyprland-dms.
+
+### Technical Details
+- Added after `kb_options`. Hyprland's default (`false`) resolves symbol binds against the first layout in `kb_layout`.
+
+### Files Modified
+- `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`
+
 ## 2026.09.05
 
 ### What Changed
