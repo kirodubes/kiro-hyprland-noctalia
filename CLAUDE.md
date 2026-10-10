@@ -69,7 +69,7 @@ of the KIROTUX Wayland line paired with noctalia-shell (sibling to
 
 ## Build / delivery
 - Source-of-truth for the config; delivered as the `kiro-hyprland-noctalia`
-  package via `../KIROTUX-PKG-BUILD/kiro-hyprland-noctalia/build.sh` (public
+  package via `~/KIRO-PKG-BUILD-APPS/kiro-hyprland-noctalia/build.sh` (public
   recipe → `~/EDU/nemesis_repo/`). After editing here: rebuild the package, then
   the ISO to test a fresh install.
-- See [../CLAUDE.md](../CLAUDE.md) for the full KIROTUX delivery architecture.
+- See [KIROTUX/CLAUDE.md](../../KIROTUX/CLAUDE.md) for the full KIROTUX delivery architecture.
