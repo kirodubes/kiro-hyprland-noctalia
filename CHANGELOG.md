@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026.10.13
+
+### What Changed
+- Caught up with the kiro-hyprland-dms fixes, ahead of the KiroTux Hyprland Noctalia ISO:
+  - **Cursor size is 24 everywhere** (was 12 in `hyprland.lua`, 24 in GTK, dconf and noctalia).
+  - **Ctrl+Alt+H without the premium app** shows a notification with a **Get KiroTux** button that opens
+    https://kiroproject.be/kirotux.html. Before, it only said the app comes with the KiroTux ISOs.
+  - The session runs **`kiro-kvantum-default`** at start, so Qt apps get KvGnomeDark (matching adw-gtk3-dark)
+    unless the user picked an installed Kvantum theme.
+  - **Super+E / Super+F2 open Sublime Text** (`subl`, which the ISO ships) instead of VS Code.
+  - **Super+Shift+X opens `archlinux-logout`**, like Super+X. `kiro-powermenu` needed rofi, which isn't on the ISO.
+  - **btop is more transparent than the terminals** (0.80/0.75): its keys start it as `alacritty --class btop`,
+    which the Alacritty rule didn't match. The Alacritty rule now matches the class exactly.
+  - `keybindings.txt` has the header line saying users can edit it to match their own binds.
+
+### Technical Details
+- Ported line by line from kiro-hyprland-dms (2026.10.04, 10.08, 10.09); the Ctrl+Alt+H line is the same
+  `notify-send -A get="Get KiroTux"` construction. The unused `powermenu` local is gone.
+- Changes ship in `/etc/skel`: new installs get them; existing users keep their `~/.config` copy (no overwrite).
+
+### Files Modified
+- `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`
+- `etc/skel/.config/kiro-hyprland-noctalia/keybindings.txt`
+- `CHANGELOG.md`
+
 ## 2026.10.10
 
 ### What Changed

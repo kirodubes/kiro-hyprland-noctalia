@@ -1,6 +1,7 @@
 ###############################################################################
 #  KEYBINDINGS — Kiro Hyprland (noctalia)
 #  Source: etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua
+#  Reference for the default bindings. Changed yours? Edit this file to match.
 #  Shell:  noctalia-shell (launcher / control center / lock / wallpaper)
 ###############################################################################
 
@@ -112,7 +113,7 @@
 
 ── 8. System & Session ────────────────────────────────────────────────────────
   super + X               Logout menu
-  super + shift + X       Power menu
+  super + shift + X       Logout menu
   super + alt + L         Lock screen (noctalia)
   ctrl + alt + R          Lock screen (noctalia)
   super + shift + W       Wallpaper selector (noctalia)

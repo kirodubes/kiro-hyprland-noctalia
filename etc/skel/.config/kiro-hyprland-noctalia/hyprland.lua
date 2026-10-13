@@ -26,9 +26,8 @@ local mod = "SUPER"
 local term     = "alacritty"
 local files    = "thunar"
 local browser  = "firefox"
-local editor   = "code"
+local editor   = "subl"                -- Sublime Text, the editor the ISO ships
 local logout   = "archlinux-logout"   -- Kiro logout dialog (archlinux-logout-gtk4), as on the other editions
-local powermenu = "kiro-powermenu"
 local keybindings = "kiro-keybindings"   -- searchable PySide6/QML cheatsheet (auto-detects Hyprland)
 
 -- Default apps picked in Kirotux Hyprland Premium (kirotux_apps.lua in this folder), else the ones above.
@@ -55,8 +54,8 @@ local wallpaper     = noctalia("wallpaper", "toggle")
 
 -- ── Environment ──────────────────────────────────────────────────────────
 -- Force Wayland across toolkits; advertise the session to portals/screenshare.
-hl.env("XCURSOR_SIZE", "12")
-hl.env("HYPRCURSOR_SIZE", "12")
+hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
 hl.env("GDK_BACKEND", "wayland,x11,*")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
@@ -246,8 +245,10 @@ hl.window_rule({ match = { class = "^(update)$", title = "^(update)$" }, center 
 -- Smooth touchpad scrolling in terminals (from nemesis input config):
 hl.window_rule({ match = { class = "(Alacritty|kitty)" }, scroll_touchpad = 1.5 })
 -- Transparent terminal — compositor opacity (works in VBox/QEMU/bare-metal alike; Hyprland's
--- blur frosts it). active/inactive: 0.90/0.85.
-hl.window_rule({ match = { class = "Alacritty" }, opacity = "0.90 0.85" })
+-- blur frosts it). active/inactive: 0.90/0.85. btop gets its own, more transparent rule: its
+-- keybindings start it as `alacritty --class btop`, which the "Alacritty" class would not match.
+hl.window_rule({ match = { class = "^(Alacritty)$" }, opacity = "0.90 0.85" })
+hl.window_rule({ match = { class = "^(btop)$" }, opacity = "0.80 0.75" })
 -- Lock the pointer inside an app — handy for games / remote desktop (0.55+):
 -- hl.window_rule({ match = { class = "^(steam_app_.*)$" }, confine_pointer = true })
 
@@ -263,6 +264,7 @@ on_start("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTO
 on_start("xdg-user-dirs-update")
 -- Mirror GTK theme/icons/cursor/font into gsettings (no xsettings daemon on Wayland).
 on_start("~/.config/kiro-hyprland-noctalia/scripts/import-gsettings.sh")
+on_start("kiro-kvantum-default")   -- Qt: KvGnomeDark (matches adw-gtk3-dark) unless the user picked an installed Kvantum theme
 -- The whole desktop: noctalia-shell (bar, launcher, lock, notifications, wallpaper,
 -- control center, session menu, polkit agent via its plugin).
 on_start("qs -c noctalia-shell")
@@ -295,7 +297,7 @@ bind(mod .. " + O",              "Colour picker",     run("hyprpicker -a"))
 bind(mod .. " + Q",              "Close window",      hl.dsp.window.close())
 bind(mod .. " + SHIFT + Q",      "Close window",      hl.dsp.window.close())
 bind(mod .. " + X",              "Logout menu",       run(logout))
-bind(mod .. " + SHIFT + X",      "Power menu",        run(powermenu))
+bind(mod .. " + SHIFT + X",      "Logout menu",       run(logout))
 bind(mod .. " + ALT + L",        "Lock screen",       run(lock))
 bind(mod .. " + SHIFT + W",      "Wallpaper selector", run(wallpaper))
 bind(mod .. " + Escape",         "Kill mode",         run("hyprctl kill"))
@@ -310,7 +312,7 @@ bind("CTRL + ALT + C",       "Chromium",        run("chromium -no-default-browse
 bind("CTRL + ALT + D",       "OBS Studio",      run("obs"))
 bind("CTRL + ALT + E",       "Tweak tool",      run("archlinux-tweak-tool"))
 -- Kirotux Hyprland Premium comes with the KIROTUX ISOs: open it, or tell users of this free edition where it is.
-bind("CTRL + ALT + H",       "Kirotux Hyprland Premium", run([[sh -c 'command -v kirotux-hyprland-premium >/dev/null && exec kirotux-hyprland-premium; exec notify-send -a "Kirotux" -i preferences-desktop-theme "Get Kirotux Hyprland Premium" "Theme, window look, wallpaper and keyboard in one app. Comes with the KIROTUX ISOs."']]))
+bind("CTRL + ALT + H",       "Kirotux Hyprland Premium", run([[sh -c 'command -v kirotux-hyprland-premium >/dev/null && exec kirotux-hyprland-premium; a=$(notify-send -a "Kirotux" -i preferences-desktop-theme -A get="Get KiroTux" "Get Kirotux Hyprland Premium" "Theme, window look, wallpaper and keyboard in one app. Comes with the KIROTUX ISOs."); [ "$a" = get ] && exec xdg-open https://kiroproject.be/kirotux.html']]))
 bind("CTRL + ALT + F",       "Firefox",         run("firefox"))
 bind("CTRL + ALT + G",       "Chromium",        run("chromium -no-default-browser-check"))
 bind("CTRL + ALT + I",       "Kiro ISO builder", run("kiro-iso-builder"))
