@@ -7,10 +7,10 @@
 --   `Hyprland --config`, so this edition never touches ~/.config/hypr/ and can
 --   coexist with the waybar-based kiro-hyprland edition on the same box.
 --
--- Desktop shell: noctalia-shell (Quickshell v4) — provides the bar, launcher,
+-- Desktop shell: noctalia v5 (native, [extra]/noctalia) — provides the bar, launcher,
 -- lock screen, notifications, wallpaper, control center, session menu and polkit
 -- agent. Hyprland is only the compositor; everything else is noctalia, driven
--- over `qs -c noctalia-shell ipc call <module> <action>`.
+-- over `noctalia msg <command>`.
 --
 -- Modeled on the mainline Hyprland Lua config, carrying Kiro's SUPER-based
 -- keybind philosophy. Uses ONLY the native hl.* API (no o.* helper layer).
@@ -42,15 +42,15 @@ do
   end
 end
 
--- noctalia IPC helpers — the shell is driven over `qs -c noctalia-shell ipc call`.
-local function noctalia(module, action)
-  return "qs -c noctalia-shell ipc call " .. module .. " " .. action
+-- noctalia IPC helpers — the shell is driven over `noctalia msg <command>`.
+local function noctalia(cmd)
+  return "noctalia msg " .. cmd
 end
-local launcher      = noctalia("launcher", "toggle")
-local controlcenter = noctalia("controlCenter", "toggle")
-local settings      = noctalia("settings", "toggle")
-local lock          = noctalia("lockScreen", "lock")
-local wallpaper     = noctalia("wallpaper", "toggle")
+local launcher      = noctalia("panel-toggle launcher")
+local controlcenter = noctalia("panel-toggle control-center")
+local settings      = noctalia("settings-toggle")
+local lock          = noctalia("session lock")
+local wallpaper     = noctalia("panel-toggle wallpaper")
 
 -- ── Environment ──────────────────────────────────────────────────────────
 -- Force Wayland across toolkits; advertise the session to portals/screenshare.
@@ -60,7 +60,7 @@ hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
 hl.env("GDK_BACKEND", "wayland,x11,*")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("QT_STYLE_OVERRIDE", "kvantum")   -- Qt style (was in /etc/environment)
--- Qt6 (noctalia/Quickshell) reads its icon theme from the gtk3 platform theme, so app icons
+-- Qt6 apps read their icon theme from the gtk3 platform theme, so app icons
 -- follow the GTK/Surfn theme. Overrides the broken /etc/environment QT_QPA_PLATFORMTHEME=qt5ct
 -- (qt5ct is Qt5 + not installed → Qt6 falls back to hicolor and app icons render as placeholders).
 hl.env("QT_QPA_PLATFORMTHEME", "gtk3")
@@ -239,6 +239,8 @@ hl.window_rule({ match = { class = "^(Spotify)$" }, tile = true })
 -- "update" popup terminal (e.g. a yay-update helper):
 hl.window_rule({ match = { class = "^(update)$", title = "^(update)$" }, float = true })
 hl.window_rule({ match = { class = "^(update)$", title = "^(update)$" }, size = { "60%", "50%" } })
+-- noctalia v5 Settings is its own toplevel window; float it at upstream's recommended size.
+hl.window_rule({ match = { class = "^(dev[.]noctalia[.]Noctalia)$" }, float = true, size = { 1080, 920 } })
 hl.window_rule({ match = { class = "^(update)$", title = "^(update)$" }, center = true })
 -- Firefox picture-in-picture (kept handy, commented):
 -- hl.window_rule({ match = { class = "^(firefox)$", title = "^(Picture-in-Picture)$" }, float = true })
@@ -265,9 +267,9 @@ on_start("xdg-user-dirs-update")
 -- Mirror GTK theme/icons/cursor/font into gsettings (no xsettings daemon on Wayland).
 on_start("~/.config/kiro-hyprland-noctalia/scripts/import-gsettings.sh")
 on_start("kiro-kvantum-default")   -- Qt: KvGnomeDark (matches adw-gtk3-dark) unless the user picked an installed Kvantum theme
--- The whole desktop: noctalia-shell (bar, launcher, lock, notifications, wallpaper,
--- control center, session menu, polkit agent via its plugin).
-on_start("qs -c noctalia-shell")
+-- The whole desktop: noctalia (bar, launcher, lock, notifications, wallpaper,
+-- control center, session menu, built-in polkit agent).
+on_start("noctalia")
 -- Live ISO only: auto-launch the installer. archiso-gated; kiro_final strips this line on install.
 -- Wrapped in `sh -c` because hl.exec_cmd execs argv directly (no shell) — the `[ ]` test and `&&`
 -- need a real shell to be interpreted; a bare string would just try to exec a binary named "[".

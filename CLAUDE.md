@@ -2,7 +2,7 @@
 
 ## Overview
 Config package for the **Kiro Hyprland (noctalia) edition** — the Hyprland member
-of the KIROTUX Wayland line paired with noctalia-shell (sibling to
+of the KIROTUX Wayland line paired with noctalia v5 (sibling to
 [kiro-niri-noctalia](../kiro-niri-noctalia/CLAUDE.md) and the waybar-based
 [kiro-hyprland](../kiro-hyprland/CLAUDE.md)). **Public, open-core**, shipped via
 `nemesis_repo`. Full research + decisions live in the internal
@@ -14,12 +14,12 @@ of the KIROTUX Wayland line paired with noctalia-shell (sibling to
 - **Config language:** Lua (`hl.*` API, Hyprland 0.55+). Single file
   `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua` (monolithic, like the
   waybar edition — not split into modules).
-- **Desktop shell:** **noctalia-shell** (Quickshell v4) — bar, launcher, lock,
-  notifications, wallpaper, control center, session menu, polkit agent (via its
-  plugin). Driven over `qs -c noctalia-shell ipc call <module> <action>`.
+- **Desktop shell:** **noctalia v5** (native, `[extra]/noctalia`) — bar, launcher, lock,
+  notifications, wallpaper, control center, session menu, built-in polkit agent.
+  Driven over `noctalia msg <command>`. (Moved off v4/Quickshell 2026-10-14: it broke on Qt 6.12.)
   Hyprland is only the compositor.
 - **Autostart:** Hyprland's `on_start(cmd)` (fires on the `hyprland.start`
-  event). Launches `qs -c noctalia-shell`, `xdg-user-dirs-update`, the gsettings
+  event). Launches `noctalia`, `xdg-user-dirs-update`, the gsettings
   import, dbus/systemd env propagation, and the archiso-gated Calamares line.
 - **Coexistence (the key design point):** namespaced. Config in
   `~/.config/kiro-hyprland-noctalia/`; the `kiro-hyprland-noctalia-session`
@@ -32,14 +32,14 @@ of the KIROTUX Wayland line paired with noctalia-shell (sibling to
   GTK look + cursor shipped via `/etc/dconf/` by `kiro-wayland-dotfiles` (this
   edition is a dconf-only consumer). `import-gsettings.sh` mirrors GTK theme into
   gsettings at session start.
-- **Dependency note:** `noctalia-shell` (+ `noctalia-qs`) come from
-  **chaotic-aur / cachyos** (both in Kiro's `pacman.conf`) — **do not** repackage
-  into `nemesis_repo`.
+- **Dependency note:** `noctalia` (v5) comes from Arch **`[extra]`** — **do not**
+  repackage into `nemesis_repo`. Never depend on `noctalia-shell`: [cachyos] ships
+  v5 under that name without `shell.qml`.
 
 ## Keybindings
 - SUPER-based Kiro scheme, reused from `kiro-hyprland`. noctalia actions
   (launcher / control center / settings / lock / wallpaper) routed to
-  `qs -c noctalia-shell ipc call`. `kiro-keybindings` on `SUPER+CTRL+S`.
+  `noctalia msg`. `kiro-keybindings` on `SUPER+CTRL+S`.
 - `keybindings.txt` mirrors `hyprland.lua` — keep them in lockstep; a
   duplicate-chord scan must pass.
 - Notable change from the waybar edition: `swapwithmaster` moved

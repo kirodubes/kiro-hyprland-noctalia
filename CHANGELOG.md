@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026.10.14
+
+### What Changed
+- Moved the edition to noctalia v5. noctalia-shell v4 (Quickshell) broke on Qt 6.12: noctalia-qs was built against Qt 6.11, so every themed widget got an undefined colour and the bar rendered as empty pills. v4 is unmaintained upstream and [cachyos] now ships v5 under the noctalia-shell name without shell.qml. Native noctalia v5.2.1 from Arch [extra] was live-tested on a real-metal test box and works.
+
+### Technical Details
+- `hyprland.lua`: the IPC helper now builds `noctalia msg <command>` (launcher/control-center/wallpaper via `panel-toggle`, `settings-toggle`, `session lock`); autostart runs `noctalia`.
+- Added a window rule that floats the v5 Settings window (`dev.noctalia.Noctalia`, 1080x920, upstream's recommendation).
+- Volume/media/brightness keys stay on wpctl/playerctl/brightnessctl. Recipe depends on `noctalia`.
+
+### Files Modified
+- etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua
+- etc/skel/.config/kiro-hyprland-noctalia/keybindings.txt
+- usr/share/wayland-sessions/kiro-hyprland-noctalia.desktop
+- README.md, CLAUDE.md
+
 ## 2026.10.13
 
 ### What Changed

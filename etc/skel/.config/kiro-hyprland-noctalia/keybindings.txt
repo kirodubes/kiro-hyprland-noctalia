@@ -2,7 +2,7 @@
 #  KEYBINDINGS — Kiro Hyprland (noctalia)
 #  Source: etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua
 #  Reference for the default bindings. Changed yours? Edit this file to match.
-#  Shell:  noctalia-shell (launcher / control center / lock / wallpaper)
+#  Shell:  noctalia (launcher / control center / lock / wallpaper)
 ###############################################################################
 
 ── 1. Applications & Launchers ────────────────────────────────────────────────
