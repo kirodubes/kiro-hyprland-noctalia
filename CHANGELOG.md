@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026.10.19
+
+### What Changed
+- Added the keybindings that ohmychadwm and the X11 editions got today, wherever the key was free (all of them were here):
+  - Super+K shows keybindings (Super+Ctrl+S still works)
+  - Super+Ctrl+L locks the screen (Super+Alt+L and Ctrl+Alt+R still work)
+  - Super+Ctrl+A opens pavucontrol
+  - Super+Ctrl+Shift+A opens an AI agent (`claude` in your terminal). Claude Code is not part of Kiro; without it the terminal closes straight away
+  - Super+Shift+F file manager, Super+Shift+B browser, Super+Shift+N code editor, Super+Shift+M spotify
+  - XF86AudioMicMute mutes the microphone
+  - Alt+volume keys change the volume by 1%
+
+### Technical Details
+- Lock uses noctalia's `session lock` (the `lock` helper), not `archlinux-betterlockscreen`, which is X11-only.
+- File manager, browser, editor and the AI agent's terminal use the `files` / `browser` / `editor` / `term` variables, so they follow the apps picked in Kirotux Hyprland Premium. Spotify is a plain `run("spotify")` and does nothing when Spotify is not installed.
+- Mic mute and the 1% steps use `wpctl`, like the existing volume keys, so noctalia's OSD still shows.
+- Super+W and Super+Up/Down from ohmychadwm were not ported: Super+Up/Down already focus up/down here.
+- This edition is the first Wayland one to get them; the others follow after a VM test.
+
+### Files Modified
+- `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`
+- `etc/skel/.config/kiro-hyprland-noctalia/keybindings.txt`
+
+
 ## 2026.10.14
 
 ### What Changed
