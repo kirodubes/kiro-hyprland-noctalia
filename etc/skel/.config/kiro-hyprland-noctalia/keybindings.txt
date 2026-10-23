@@ -116,6 +116,17 @@
   XF86MonBrightnessUp     Brightness up
   XF86MonBrightnessDown   Brightness down
 
+── 6b. Wallpaper (Variety) ────────────────────────────────────────────────────
+  alt + N                 Next wallpaper
+  alt + P                 Previous wallpaper
+  alt + T                 Trash wallpaper
+  alt + F                 Favorite wallpaper
+  alt + shift + N         Next wallpaper
+  alt + shift + P         Previous wallpaper
+  alt + shift + T         Trash wallpaper
+  alt + shift + F         Favorite wallpaper
+  ctrl + ctrl             Switch keyboard layout (left + right Ctrl)
+
 ── 7. Screenshots ─────────────────────────────────────────────────────────────
   Print                   Screenshot region  -> ~/Pictures/Screenshots + clipboard
   super + Print           Screenshot screen  -> ~/Pictures/Screenshots + clipboard

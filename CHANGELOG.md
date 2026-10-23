@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026.10.23
+
+### What Changed
+- **Keyboard layout switch moves to both Ctrl keys; Alt+Shift+N/P/T/F change the wallpaper.** With two layouts, Alt+Shift switched the layout the moment both keys were down, so Alt+Shift+N switched the layout and changed the wallpaper too. The layout switch is now left Ctrl + right Ctrl, the same on every KiroTux edition (kiro-wayfire, kiro-hyprland-dms and kiro-niri-dms got it first). Alt+Shift+N/P/T/F run the same Variety commands as Alt+N/P/T/F, so the keys match the editions where Alt+Shift+N recolours. New installs only. Existing users: change `grp:alt_shift_toggle` to `grp:ctrls_toggle` in `~/.config/kiro-hyprland-noctalia/hyprland.lua` and copy the four `ALT + SHIFT` binds from `/etc/skel`.
+
+### Technical Details
+- `kb_options = "grp:ctrls_toggle,compose:caps"` in `hyprland.lua`; four `ALT + SHIFT` Variety binds after the Variety block; keybindings.txt lists them and Ctrl+Ctrl. keybindings.txt had no Variety section although `hyprland.lua` binds Alt+N/P/T/F; it has one now. Config checked (Lua syntax / `niri validate`), duplicate-chord scan clean for the new keys. Kirotux Hyprland Premium still says Alt+Shift on its Keyboard page until its keyboard fix (it reads the keys from Hyprland's `kb_options`) ships.
+
+### Files Modified
+- `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`, `etc/skel/.config/kiro-hyprland-noctalia/keybindings.txt`
+
 ## 2026.10.19
 
 ### What Changed

@@ -183,7 +183,7 @@ hl.config({
   input = {
     kb_layout = kb_layout,                          -- installer choice, else US + Belgian
     kb_variant = kb_variant,
-    kb_options = "grp:alt_shift_toggle,compose:caps",  -- Alt+Shift switches layouts; Caps = Compose
+    kb_options = "grp:ctrls_toggle,compose:caps",  -- both Ctrl keys switch layouts (Alt+Shift stays free); Caps = Compose
     resolve_binds_by_sym = true,                    -- binds follow the active layout (Super+A = the A you see)
     repeat_rate = 40,
     repeat_delay = 600,
@@ -443,6 +443,11 @@ bind("ALT + n", "Variety --next", run("variety -n"))
 bind("ALT + p", "Variety --previous", run("variety -p"))
 bind("ALT + t", "Variety --trash", run("variety -t"))
 bind("ALT + f", "Variety --favorite", run("variety -f"))
+-- Alt+Shift: the same commands, so the keys match the editions where Alt+Shift+N recolours.
+bind("ALT + SHIFT + n", "Variety --next", run("variety -n"))
+bind("ALT + SHIFT + p", "Variety --previous", run("variety -p"))
+bind("ALT + SHIFT + t", "Variety --trash", run("variety -t"))
+bind("ALT + SHIFT + f", "Variety --favorite", run("variety -f"))
 
 -- ── Appearance overrides (keep these lines LAST) ─────────────────────────────
 -- Kirotux Hyprland Premium writes your look to appearance.lua in this folder; it only
