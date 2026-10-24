@@ -20,6 +20,10 @@
 #   that it was started WITHOUT uwsm, and uwsm is the upstream-recommended launch
 #   method (it sets up the systemd user session + imports the environment). The
 #   --config flag still points Hyprland at this edition's own config folder.
+#   start-hyprland (from the hyprland package) runs Hyprland with --watchdog-fd,
+#   so a crashed or hung compositor can be recovered; Hyprland 0.56 warns when
+#   it is launched without it. `-e -D Hyprland` keeps XDG_CURRENT_DESKTOP=Hyprland
+#   so the portals still pick the Hyprland backend.
 #####################################################################
 
-exec uwsm start -- Hyprland --config "$HOME/.config/kiro-hyprland-noctalia/hyprland.lua" "$@"
+exec uwsm start -e -D Hyprland -- start-hyprland -- --config "$HOME/.config/kiro-hyprland-noctalia/hyprland.lua" "$@"
