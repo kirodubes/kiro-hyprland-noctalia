@@ -5,6 +5,7 @@
 ### What Changed
 - **Hyprland now starts through `start-hyprland`.** The session wrapper ran Hyprland directly under uwsm, so Hyprland 0.56 logged "launched without start-hyprland" and had no watchdog. `start-hyprland` runs Hyprland with `--watchdog-fd`, so a crashed or hung compositor can be recovered. Reaches every install with the package update; nothing to do in `~/.config`. Tested on the RTX 2060 test box with a fresh KiroTux Hyprland Noctalia install: 4 logins (3 fast logout/login), every time with working portals (ScreenCast, FileChooser) and Noctalia up.
 
+- Cleanup: `Ctrl+Alt+Return` (terminal) was bound twice; the stray copy under the screenshot binds is gone, the one in the Ctrl+Alt launcher group stays. No change in behaviour.
 ### Technical Details
 - `exec uwsm start -- Hyprland --config …` → `exec uwsm start -e -D Hyprland -- start-hyprland -- --config …`. `start-hyprland` passes everything after `--` to Hyprland and adds `--watchdog-fd`.
 - `-e -D Hyprland` keeps `XDG_CURRENT_DESKTOP=Hyprland`, so xdg-desktop-portal still picks the Hyprland backend.
@@ -12,6 +13,7 @@
 
 ### Files Modified
 - `usr/bin/kiro-hyprland-noctalia-session`
+- `etc/skel/.config/kiro-hyprland-noctalia/hyprland.lua`
 - `CHANGELOG.md`
 
 ## 2026.10.23

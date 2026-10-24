@@ -435,8 +435,6 @@ bind("XF86MonBrightnessDown", "Brightness down",run("brightnessctl set 5%-"))
 bind("PRINT",           "Screenshot region", run("kiro-screenshot region"))
 bind(mod .. " + PRINT", "Screenshot screen", run("kiro-screenshot screen"))
 
-bind("CTRL + ALT + Return",  "Terminal",        run(term))
-
 -- Variety
 -- install swaybg
 bind("ALT + n", "Variety --next", run("variety -n"))
